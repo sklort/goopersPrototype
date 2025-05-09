@@ -6,6 +6,7 @@ public class Pistol : MonoBehaviour
 {
     private Camera _cam;
     [SerializeField] GameObject cameraObject;
+    [SerializeField] private GameObject muzzleObject;
 
     private int _z;
 
@@ -25,6 +26,7 @@ public class Pistol : MonoBehaviour
     private float lineWidthStart = 0.1f;
     private float lineWidthEnd = 0.05f;
     private float lineMaxLength = 100f;
+    private float damage = 1f;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -44,7 +46,7 @@ public class Pistol : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        damage = gameBoss.pistolDamage;
         currentTime += Time.deltaTime;
 
         canPlay = gameBoss.canPlay;
@@ -90,23 +92,32 @@ public class Pistol : MonoBehaviour
                         Target target = hitObj.GetComponent<Target>();
 
                         if (target != null)
+                        {
+
+                            float pistolDamage = damage;
                             target.EnemyTakeDamage(pistolDamage);
+                        }
+
+                        if (Physics.Raycast(ray, out hit, lineMaxLength))
+                        {
+
+                            endPosition = hit.point;
+                        }
                     }
 
-                    if (Physics.Raycast(ray, out hit, lineMaxLength))
-                    {
-                        endPosition = hit.point;
-                    }
-
-                    line.SetPosition(0, pistol.transform.position);
+                    line.SetPosition(0, muzzleObject.transform.position);
                     line.SetPosition(1, endPosition);
+
 
                 }
             }
         }
     }
 
-    IEnumerator LineOn()
+
+
+
+IEnumerator LineOn()
     {
         line.enabled = true;
 

@@ -17,6 +17,8 @@ public class Target : MonoBehaviour, IEnemyMoveable
     private bool inTDCoroutine;
     public bool damagePlayerOn;
     private bool inPlayerCoroutine;
+
+    
     
    
     private GameObject otherSlime;
@@ -36,22 +38,22 @@ public class Target : MonoBehaviour, IEnemyMoveable
         gameBossObject = GameObject.Find("GameBoss");
         gameBoss = gameBossObject.GetComponent<GameBoss>();
         
-        enemyHealth = Random.Range(1.0f * (gameBoss.globalDifficulty * 0.5f), 4.0f * (gameBoss.globalDifficulty * 0.5f));
-        enemyMovementSpeed = 2f * (gameBoss.globalDifficulty * 0.75f);
+        enemyHealth = Random.Range(1.0f * (gameBoss.globalDifficulty * 0.2f), 3.0f * (gameBoss.globalDifficulty * 0.15f));
+        enemyMovementSpeed = 2f * (gameBoss.globalDifficulty * 0.09f);
         
         
         //Enemy damage calculation
         enemyDamage = 1f;
-        if (gameBoss.globalDifficulty >= 3)
-        {
-            enemyDamage = 1f * (gameBoss.globalDifficulty * 0.25f);
-        }
+        // if (gameBoss.globalDifficulty >= 3)
+        // {
+        //     enemyDamage = 1f * (gameBoss.globalDifficulty * 0.25f);
+        // }
 
         enemyDamageCooldown = 5f;
-        if (gameBoss.globalDifficulty >= 4)
-        {
-            enemyDamageCooldown = 5f * (1 / (gameBoss.globalDifficulty * 0.25f));
-        }
+        // if (gameBoss.globalDifficulty >= 4)
+        // {
+        //     enemyDamageCooldown = 5f * (1 / (gameBoss.globalDifficulty * 0.25f));
+        // }
         
         //Init walk state
         StateMachine.Initialize(WalkState);
@@ -154,6 +156,11 @@ public class Target : MonoBehaviour, IEnemyMoveable
         }
 
         if (gameBoss.TDHealth <= 0)
+        {
+            Destroy(gameObject);
+        }
+
+        if (gameBoss.newGame == false)
         {
             Destroy(gameObject);
         }

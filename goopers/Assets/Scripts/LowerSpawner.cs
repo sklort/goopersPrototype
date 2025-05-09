@@ -28,14 +28,14 @@ public class LowerSpawner : MonoBehaviour
             if (firstLowerSpawn)
             {
                 // scale spawn times based on difficulty
-                if (gameBoss.globalDifficulty >= 2.5f)
+                if (gameBoss.globalDifficulty >= 3f)
                 {
-                    float difficultyDivider = (1f / (gameBoss.globalDifficulty * 0.3f));
-                    minSpawnTime = (minSpawnTime * difficultyDivider);
+                    float difficultyDivider = (1f / (gameBoss.globalDifficulty * 0.15f));
+                    minSpawnTime = (minSpawnTime * (difficultyDivider * 0.5f));
                     maxSpawnTime = (maxSpawnTime * difficultyDivider);
                 }
 
-                if (gameBoss.globalDifficulty < 2.5f)
+                if (gameBoss.globalDifficulty < 3f)
                 {
                     minSpawnTime = 0.5f;
                     maxSpawnTime = 3f;

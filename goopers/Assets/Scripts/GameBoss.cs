@@ -37,7 +37,12 @@ public class GameBoss : MonoBehaviour
     public float globalDifficulty;
     public float globalFireSpeed;
     public float TDHealth;
+    public float TDHealthMax;
     public float playerHealth;
+    public int waveCount = 0;
+    
+    //weapon data
+    public float pistolDamage = 1f;
    
     
     
@@ -53,9 +58,12 @@ public class GameBoss : MonoBehaviour
         //new game crosshair removal
         if (!newGame)
         {
+            waveCount = 0;
+            TDHealthMax = 10f;
             TDHealth = 10f;
             gameOver.SetActive(false);
             crosshair.SetActive(false);
+            globalDifficulty = 1.0f;
         }
         
         //exit enter screen
@@ -84,13 +92,13 @@ public class GameBoss : MonoBehaviour
         {
             
             // determine enemy count using difficulty
-            if (globalDifficulty >= 2)
+            if (globalDifficulty >= 3)
             {
-                float lowerEnemyMinFloat = lowerEnemyMin * (globalDifficulty * 0.5f);
+                float lowerEnemyMinFloat = lowerEnemyMin * (globalDifficulty * 0.2f);
                 lowerEnemyMin = Mathf.FloorToInt(lowerEnemyMinFloat);
 
 
-                float lowerEnemyMaxFloat = lowerEnemyMax * (globalDifficulty * 0.5f);
+                float lowerEnemyMaxFloat = lowerEnemyMax * (globalDifficulty * 0.15f);
                 lowerEnemyMax = Mathf.FloorToInt(lowerEnemyMaxFloat);
             }
 
@@ -118,18 +126,19 @@ public class GameBoss : MonoBehaviour
             canShop = true;
             startWaveText.SetActive(true);
             
-            // reward money
+            // reward money and up waveCount
             if (!rewardGiven)
             {
-                playerMoney += 50.0f * (globalDifficulty*3/4);
+                waveCount++;
+                playerMoney += 25f + 25 * (globalDifficulty*0.2f);
                 rewardGiven = true;
             }
 
             // increase difficulty based on performance / time
             if (difficultyUpped == false)
             {
-                float difficultyDivider = (10 * globalDifficulty)/ waveTimer;
-                float difficultyUp = 0.5f + (1 * difficultyDivider);
+                float difficultyDivider = (5 * globalDifficulty)/ waveTimer;
+                float difficultyUp = (1 * difficultyDivider);
                 globalDifficulty += difficultyUp;
                 difficultyUpped = true;
                 waveTimer = 0;

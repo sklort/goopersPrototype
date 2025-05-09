@@ -19,6 +19,7 @@ public class PlayerMoney : MonoBehaviour
     void Update()
     {
         playerMoney = gameBoss.playerMoney;
+        playerMoney = Mathf.CeilToInt(playerMoney);
         message.text = string.Format("{0}{1}", "$", playerMoney);
     }
 }
